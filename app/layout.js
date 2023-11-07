@@ -3,7 +3,10 @@ import { Inter } from "next/font/google";
 import "@styles/globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster"
 import { Nav } from '@components/Nav';
+import Provider from '@components/Provider';
+ 
 
 
 
@@ -18,6 +21,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+      <Toaster />
+        < Provider>
       <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -31,6 +36,7 @@ export default function RootLayout({ children }) {
           <Nav />
       
           {children}</main></ThemeProvider>
+          </Provider>
       </body>
     </html>
   );

@@ -8,42 +8,45 @@ import { useEffect, useState } from "react";
 import { ModeToggle } from "./ModeToggle";
 
 export const Nav = () => {
-  const isUserLoggedIn = true;
+
+    
+
+  const {data:session } = useSession();
+
 
   const [providers, setProviders] = useState(null);
 
   const [toggleDropdown, setToggleDropdown] =useState(false)
 
   useEffect(() => {
-    const setProviders = async () => {
+    const setAllProviders = async () => {
       const response = await getProviders();
       setProviders(response);
     };
-    setProviders();
+    setAllProviders();
   }, []);
 
   const signOut = () => {
     return console.log("click");
   };
   return (
-    <nav className=" flex justify-between items-center w-full mb-16 pt-3">
+    <nav className=" flex justify-between items-center w-full mb-16 h-16 bg-slate-50 dark:bg-transparent">
       <Link href="/" className="flex gap-2 items-center">
         {/*<Image src="/assets/images/logo.svg" alt="chadPrompts" width={30} height={30} className=" object-contain"    />*/}
         <h2 className="   ml-2 text-2xl font-black ">
           Prompt
-          <span className=" text-slate-100 text-4xl font-extrabold ml-1 px-3 py-1  rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+          <span className=" text-slate-100 text-2xl font-extrabold ml-1 px-3 py-1  rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             IT
           </span>
           <span className="ml-5"><ModeToggle /></span>
     
         </h2>
       </Link>
-
       {/* Desktop navigation */}
       
       <div className="sm:flex hidden">
         
-        {isUserLoggedIn ? (
+        {session?.user? (
           <div className="flex gap-3 md:gap-5">
             <Link
               href="/create-prompt"
@@ -56,7 +59,7 @@ export const Nav = () => {
             </Button>
             <Link href="/profile">
               <Image
-                src="/assets/images/profile.svg"
+                src={session?.user.image}
                 width={37}
                 height={37}
                 className="rounded-full mr-2"
@@ -71,7 +74,7 @@ export const Nav = () => {
                 <Button
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  variant="primary"
+                  className="mr-3"
                 >
                   Sign In
                 </Button>
@@ -83,10 +86,10 @@ export const Nav = () => {
       {/* Mobile navigation */}
 
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/profile.svg"
+              src={session?.user.image}
               width={37}
               height={37}
               className="rounded-full mr-2"
@@ -94,7 +97,7 @@ export const Nav = () => {
               onClick={() => setToggleDropdown((prev) => !prev)}
             />
             {toggleDropdown && (
-                <div className="absolute right-0 mr-2 top-full mt-3 w-full p-5 rounded-lg  shadow-slate-300  border-2  min-w-[210px] flex flex-col gap-2 justify-end items-end;">
+                <div className="absolute right-0 mr-2 top-full mt-1 w-full p-5 rounded-lg  shadow-slate-300  border-2  min-w-[210px] flex flex-col gap-2 justify-end items-end;">
                     <Link href="/profile" className="text-sm font-inter text-gray-700 dark:text-slate-100 hover:text-gray-500 font-medium;"
                     onClick={() => setToggleDropdown(false)
                     }>
@@ -107,12 +110,14 @@ export const Nav = () => {
                     Post a Prompt
                     
                     </Link> 
-                    <Button onClick={() => {
+                    <Button
+                    className="mt-1 w-full "
+                    onClick={() => {
                         setToggleDropdown(false)
                         signOut()
                     }}>
                         Sign Out
-
+                    
                     </Button>
 
 
@@ -127,10 +132,11 @@ export const Nav = () => {
                 <Button
                   key={provider.name}
                   onClick={() => signIn(provider.id)}
-                  variant="primary"
+                  className="mr-3"
                 >
                   Sign In
                 </Button>
+                
               ))}
           </>
         )}
