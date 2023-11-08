@@ -16,7 +16,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
       <div className='mt-10 flex flex-wrap w-3/4 mx-auto'>
         {data.map((post) => (
            <PromptCard
-          
+          key={post.id}
            post={post}
            handleEdit={() => handleEdit && handleEdit(post)}
            handleDelete={() => handleDelete && handleDelete(post)}

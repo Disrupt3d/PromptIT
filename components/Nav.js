@@ -26,9 +26,7 @@ export const Nav = () => {
     setAllProviders();
   }, []);
 
-  const signOut = () => {
-    return console.log("click");
-  };
+  
   return (
     <nav className=" flex justify-between items-center w-full mb-16 h-16 bg-slate-50 dark:bg-transparent">
       <Link href="/" className="flex gap-2 items-center">
