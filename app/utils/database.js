@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 
 
-dotenv.config();
+require('dotenv').config({ path: '../../.env'})
 
 let isConnected = false; //track the connection
 
