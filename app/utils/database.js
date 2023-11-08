@@ -1,4 +1,8 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
+
+
+dotenv.config();
 
 let isConnected = false; //track the connection
 
@@ -12,7 +16,7 @@ export const connectToDB = async () => {
 
   try {
     await mongoose.connect(
-      "mongodb+srv://test:promptituser@cluster0.7ne60or.mongodb.net/?retryWrites=true&w=majority",
+      process.env.MONGODB_URI,
       {
         dbName: "share_prompt",
         useNewUrlParser: true,
